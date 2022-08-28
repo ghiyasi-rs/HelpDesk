@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    //Duty means Request in Task document
     public class Duty
     {
         [Key]

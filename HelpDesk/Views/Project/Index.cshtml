@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Domain.Entities.Project>
+@{
+    ViewData["Title"] = "TeamLead Panel";
+}
+
+<div class="container  align-content-center">
+    <h1>Project List</h1>
+
+
+
+    <sapn class="btn btn-outline-secondary "> @Html.ActionLink("New Project","Add","Project" ,null,new {style="text-decoration:none"})</sapn>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Name)</th>
+
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+                            @Html.ActionLink("Detail", "Detail", new { id=item.Id })
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    }
+
+</div>

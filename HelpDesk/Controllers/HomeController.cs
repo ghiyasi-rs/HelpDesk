@@ -1,7 +1,9 @@
 ﻿using Domain.Dtos;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces.Repository;
 using HelpDesk.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,16 +40,25 @@ namespace HelpDesk.Controllers
 
         public async Task<IActionResult> Login(User _user)
         {
-             var user = await _userRepository.FindAsync(u => u.UserName == _user.UserName && u.Password == _user.Password);
-          
+            var user = await _userRepository.FindAsync(u => u.UserName == _user.UserName && u.Password == _user.Password);
+
             try
             {
                 if (user != null)
                 {
                     HttpContext.Session.SetString("UserName", user.UserName);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
+                    switch (user.Type)
+                    {
+                        case UserType.Admin:
+                            return RedirectToAction("Index", "Admin");
+                        case UserType.TeamLead:
+                            return RedirectToAction("Index", "Project");
+                        default:
+                            return RedirectToAction("Index", "Home");
+                    }
 
-                    return RedirectToAction("Index", "Home");
+                   
                 }
                 else
                 {

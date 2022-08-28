@@ -1,0 +1,46 @@
+﻿@model Domain.Dtos.ProjectDetailDto
+
+@{
+    ViewData["Title"] = "Project Detail";
+}
+
+
+
+    <h1>Project Detail</h1>
+
+
+
+    <sapn class="btn btn-outline-secondary "> @Html.ActionLink("Add Member","AddMember","Project" ,null,new {id=Model.Id, style="text-decoration:none"})</sapn>
+
+
+
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-4">
+                <span class="alert-danger">@TempData["ErrorMessage"]</span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+        <div class="col-md-4">
+            @foreach (var item in Model.ProjectMember)
+            {
+                <h1>@item.UserName</h1>
+            }
+        </div>
+        <div class="col-md-4">
+        </div>
+        </div>
+      
+
+
+       
+    </div>
+
+

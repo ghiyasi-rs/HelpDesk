@@ -18,13 +18,13 @@
         </div>
     </div>
 }
-else
+else if (Model.Type == Domain.Enums.UserType.TeamLead)
 {
 
     <div class="form-group">
         <div class="col-md-4">
             <sapn class="btn btn-outline-secondary ">
-                @Html.ActionLink("Change Password","ChangePassword","User" , new {id = Model.Id })
+                @Html.ActionLink("Teamlead Panel","Index","Project" )
             </sapn>
         </div>
     </div>
