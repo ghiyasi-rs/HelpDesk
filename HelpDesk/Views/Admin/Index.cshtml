@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Domain.Entities.User>
+@{
+    ViewData["Title"] = "AdminPanel";
+}
+
+
+<div class="container  align-content-center">
+    <h1>Employee List</h1> 
+
+
+
+    <sapn class="btn btn-outline-secondary "> @Html.ActionLink("New Employee","AddUser","Admin" ,null,new {style="text-decoration:none"})</sapn>
+  
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th scope="col"> @Html.DisplayNameFor(model => model.Name)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.LastName)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.UserName)</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Id })                       
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                    </td>
+                </tr>
+            
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,31 @@
+﻿@model Domain.Entities.User
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h3>Home Page</h3>
+
+@if (Model.Type == Domain.Enums.UserType.Admin)
+{
+
+
+    <div class="form-group">
+        <div class="col-md-4">
+            <sapn class="btn btn-outline-secondary ">
+                @Html.ActionLink("Admin Panel","Index","Admin" )
+            </sapn>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="form-group">
+        <div class="col-md-4">
+            <sapn class="btn btn-outline-secondary ">
+                @Html.ActionLink("Change Password","ChangePassword","User" , new {id = Model.Id })
+            </sapn>
+        </div>
+    </div>
+}
