@@ -15,7 +15,7 @@ namespace Domain.Dtos
      
         public List<User> ProjectMember { get; set; }
 
-        public List <Duty> Duties { get; set; }
+        public List <DutyDto> Duties { get; set; }
          
     }
 }

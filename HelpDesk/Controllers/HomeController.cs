@@ -48,17 +48,10 @@ namespace HelpDesk.Controllers
                 {
                     HttpContext.Session.SetString("UserName", user.UserName);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
-                    switch (user.Type)
-                    {
-                        case UserType.Admin:
-                            return RedirectToAction("Index", "Admin");
-                        case UserType.TeamLead:
-                            return RedirectToAction("Index", "Project");
-                        default:
-                            return RedirectToAction("Index", "Home");
-                    }
+                    HttpContext.Session.SetString("UserType", user.Type.ToString());
+                    
+                    return RedirectToAction("Index", "Home");
 
-                   
                 }
                 else
                 {

@@ -6,25 +6,36 @@
 
 <h3>Home Page</h3>
 
-@if (Model.Type == Domain.Enums.UserType.Admin)
+@if (Model.Type == Domain.Enums.UserType.Admin || Model.Type == Domain.Enums.UserType.NetworkManager)
 {
 
 
-    <div class="form-group">
+    <div class="form-group p-2">
         <div class="col-md-4">
             <sapn class="btn btn-outline-secondary ">
-                @Html.ActionLink("Admin Panel","Index","Admin" )
+                @Html.ActionLink("Employee List","Index","Admin" )
             </sapn>
         </div>
     </div>
 }
-else if (Model.Type == Domain.Enums.UserType.TeamLead)
+ @if (Model.Type == Domain.Enums.UserType.TeamLead || Model.Type == Domain.Enums.UserType.NetworkManager)
 {
 
-    <div class="form-group">
+    <div class="form-group p-2">
         <div class="col-md-4">
             <sapn class="btn btn-outline-secondary ">
-                @Html.ActionLink("Teamlead Panel","Index","Project" )
+                @Html.ActionLink("Project List","Index","Project" )
+            </sapn>
+        </div>
+    </div>
+}
+ @if (Model.Type == Domain.Enums.UserType.TeamMember || Model.Type == Domain.Enums.UserType.NetworkManager)
+{
+
+    <div class="form-group p-2">
+        <div class="col-md-4">
+            <sapn class="btn btn-outline-secondary ">
+                @Html.ActionLink("Request List","Index","Request" )
             </sapn>
         </div>
     </div>

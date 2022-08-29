@@ -43,6 +43,7 @@ namespace DataAccess.Contexts
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Request> Requests { get; set; }
     }
 
 

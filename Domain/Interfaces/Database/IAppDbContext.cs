@@ -16,5 +16,6 @@ namespace Domain.Interfaces.Database
         DbSet<Project> Projects { get; set; }
         DbSet<ProjectMember> ProjectMembers { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Request> Requests { get; set; }
     }
 }

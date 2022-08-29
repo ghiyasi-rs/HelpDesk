@@ -1,0 +1,57 @@
+﻿@model Domain.Dtos.ProjectMemberDto
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header headerStyle">
+                <h5>Add Member To Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+
+                @using (Html.BeginForm())
+                {
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.ProjectId)
+
+                    <div class="form-horizontal">
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <span class="alert-danger">@TempData["ErrorMessage"]</span>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => Model.UserId, new SelectList(Model.User, "Id", "Name"), htmlAttributes: new { @class = "form-control", id = "UserId"})
+                            </div>
+                        </div>
+
+                     
+                    </div>
+                }
+            </div>
+            <div style="position:sticky; bottom:0 ; background:#fff">
+
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+
+                    <button type="button" class="btn  submitBtn" data-save="modal">Add</button>
+                    <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

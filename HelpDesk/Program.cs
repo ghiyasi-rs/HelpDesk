@@ -1,4 +1,5 @@
 using DataAccess.Contexts;
+using DataAccess.Repository;
 using Domain.Interfaces.Database;
 using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>(); 
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
 builder.Services.AddScoped<IDutyRepository, DutyRepository>();
-
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 
 var app = builder.Build();
 

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Domain.Entities.Request>
+@{
+    ViewData["Title"] = "Team Member Panel";
+}
+<div id="modal-placeholder"></div>
+<div class="container  align-content-center">
+    <h1>Request List</h1>
+  
+    <button type="button" class="btn btn-outline-secondary" data-toggle="ajax-modal" data-url="@Url.Action("Add", "Request")">
+        <i class="fa fa-plus"></i> <span>add Request</span>
+    </button>
+
+    <div class="row">
+        <div class="col-md-4">
+            @if (Model.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th scope="col"> @Html.DisplayNameFor(model => model.Title)</th>
+                            <th scope="col"> @Html.DisplayNameFor(model => model.Description)</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>
+
+                                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var placeholderElement = $('#modal-placeholder');
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                placeholderElement.html(data);
+                placeholderElement.find('.modal').modal('show');
+            });
+        });
+        placeholderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var dataToSend = form.serialize();
+
+            $.post(actionUrl, dataToSend).done(function (data) {
+                placeholderElement.find('.modal').modal('hide');
+                location.reload()
+            });
+
+        });
+
+    });
+</script>

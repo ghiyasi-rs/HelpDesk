@@ -4,43 +4,125 @@
     ViewData["Title"] = "Project Detail";
 }
 
+<div id="modal-placeholder"></div>
+
+<h1>Project Detail</h1>
 
 
-    <h1>Project Detail</h1>
+<button type="button" class="btn btn-outline-secondary" data-toggle="ajax-modal" data-url="@Url.Action("AddMember", "Project",new {projectId=Model.Id})">
+    <i class="fa fa-plus"></i> <span>add Member</span>
+</button>
+<button type="button" class="btn btn-outline-secondary" data-toggle="ajax-modal" data-url="@Url.Action("AddDuty", "Project",new {projectId=Model.Id})">
+    <i class="fa fa-plus"></i> <span>Add Duty</span>
+</button>
 
 
 
-    <sapn class="btn btn-outline-secondary "> @Html.ActionLink("Add Member","AddMember","Project" ,null,new {id=Model.Id, style="text-decoration:none"})</sapn>
+<div class="form-horizontal">
 
-
-
-    <div class="form-horizontal">
-
-        <div class="row">
-            <div class="col-md-4"> </div>
-            <div class="col-md-4">
-                <span class="alert-danger">@TempData["ErrorMessage"]</span>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-
-            </div>
+    <div class="row">
+        <div class="col-md-4"> </div>
         <div class="col-md-4">
-            @foreach (var item in Model.ProjectMember)
-            {
-                <h1>@item.UserName</h1>
-            }
+            <span class="alert-danger">@TempData["ErrorMessage"]</span>
         </div>
-        <div class="col-md-4">
-        </div>
-        </div>
-      
+        <div class="col-md-4"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="alert-info">Project Members List</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th scope="col">Name</th>                       
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
 
-       
+                    @foreach (var item in Model.ProjectMember)
+                    {
+                        <tr>
+
+                            <td>@item.Name</td>
+                          
+                            <td>
+                                @Html.ActionLink("Delete", "DeleteMember", new { id=item.Id })
+
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h4 class="alert-info">Project Tasks List</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model.Duties)
+                    {
+                        <tr>
+
+                            <td>@item.Title</td>
+                            <td>@item.Description</td>
+                            <td>@item.UserName</td>
+                            <td>
+                                @Html.ActionLink("Delete", "DeleteDuty", new { id=item.Id })
+
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        
+        </div>
     </div>
 
 
+
+
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var placeholderElement = $('#modal-placeholder');
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                placeholderElement.html(data);
+                placeholderElement.find('.modal').modal('show');
+            });
+        });
+        placeholderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var dataToSend = form.serialize();
+
+            $.post(actionUrl, dataToSend).done(function (data) {
+                placeholderElement.find('.modal').modal('hide');
+                location.reload()
+            });
+
+        });
+
+    });
+</script>
