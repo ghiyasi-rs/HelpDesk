@@ -61,9 +61,10 @@ namespace HelpDesk.Controllers
 
                 return PartialView("_AddRequest", requestDto);
             }
-            catch
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Request");
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
             }
 
         }
@@ -94,11 +95,10 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Index", "Request");
             }
-
-            catch
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Request");
-
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
             }
 
 
@@ -118,11 +118,11 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Index", "Request");
             }
-            catch
+            catch (Exception ex)
             {
+                TempData["ErrorMessage"] = ex;
                 return RedirectToAction("Error", "Home");
             }
-
 
         }
     }

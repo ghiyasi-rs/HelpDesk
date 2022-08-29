@@ -111,54 +111,73 @@ namespace HelpDesk.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-
-
-            ProjectDetailDto projectDetailDto = new ProjectDetailDto();
-            projectDetailDto.Id = id;
-            List<User> projectMember = await _projectMemberRepository.GetAll().Where(p => p.ProjectId == id).Select(p => new User
+            try
             {
-                Id = p.Id,
-                Name = p.User.Name,
 
-            }).ToListAsync();
 
-            projectDetailDto.ProjectMember = projectMember;
 
-            var duties = await _dutyRepository.GetAll().Include(u => u.User).Where(x => x.ProjectId == id).ToListAsync();
 
-            List<DutyDto> projectDuty = await _dutyRepository.GetAll().Where(p => p.ProjectId == id).Select(p => new DutyDto
+                ProjectDetailDto projectDetailDto = new ProjectDetailDto();
+                projectDetailDto.Id = id;
+                List<User> projectMember = await _projectMemberRepository.GetAll().Where(p => p.ProjectId == id).Select(p => new User
+                {
+                    Id = p.Id,
+                    Name = p.User.Name,
+
+                }).ToListAsync();
+
+                projectDetailDto.ProjectMember = projectMember;
+
+                var duties = await _dutyRepository.GetAll().Include(u => u.User).Where(x => x.ProjectId == id).ToListAsync();
+
+                List<DutyDto> projectDuty = await _dutyRepository.GetAll().Where(p => p.ProjectId == id).Select(p => new DutyDto
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    UserName = p.User.Name
+
+
+                }).ToListAsync();
+                projectDetailDto.Duties = projectDuty;
+
+
+                return View(projectDetailDto);
+            }
+            catch (Exception ex)
             {
-                Id = p.Id,
-                Title = p.Title,
-                Description = p.Description,
-                UserName = p.User.Name
-
-
-            }).ToListAsync();
-            projectDetailDto.Duties = projectDuty;
-
-
-            return View(projectDetailDto);
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> AddMember(int projectId)
         {
-            if (projectId > 0)
+            try
             {
-                var existUser = _projectMemberRepository.GetAll().Where(p => p.ProjectId == projectId).Select(x => x.UserId).ToArray();
-                ProjectMemberDto projectMemberDto = new ProjectMemberDto();
 
-                projectMemberDto.User = await _userRepository.GetAll().Where(p => !existUser.Contains(p.Id)).ToListAsync();
-                projectMemberDto.ProjectId = projectId;
 
-                return PartialView("_AddMember", projectMemberDto);
+                if (projectId > 0)
+                {
+                    var existUser = _projectMemberRepository.GetAll().Where(p => p.ProjectId == projectId).Select(x => x.UserId).ToArray();
+                    ProjectMemberDto projectMemberDto = new ProjectMemberDto();
+
+                    projectMemberDto.User = await _userRepository.GetAll().Where(p => !existUser.Contains(p.Id)).ToListAsync();
+                    projectMemberDto.ProjectId = projectId;
+
+                    return PartialView("_AddMember", projectMemberDto);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Project");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Project");
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
             }
-
 
         }
 
@@ -180,11 +199,10 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Detail", "Project", new { id = projectMemberDto.ProjectId });
             }
-
-            catch
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Project");
-
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
             }
 
 
@@ -213,28 +231,37 @@ namespace HelpDesk.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDuty(DutyDto _dutyDto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Duty duty = new Duty()
+
+
+                if (ModelState.IsValid)
                 {
-                    Title = _dutyDto.Title,
-                    Description = _dutyDto.Description,
-                    ProjectId = _dutyDto.ProjectId,
-                    UserId = _dutyDto.UserId,
+                    Duty duty = new Duty()
+                    {
+                        Title = _dutyDto.Title,
+                        Description = _dutyDto.Description,
+                        ProjectId = _dutyDto.ProjectId,
+                        UserId = _dutyDto.UserId,
 
 
-                };
+                    };
 
 
-                await _dutyRepository.AddAsync(duty);
-                return RedirectToAction("Detail", "Project", new { id = duty.ProjectId });
+                    await _dutyRepository.AddAsync(duty);
+                    return RedirectToAction("Detail", "Project", new { id = duty.ProjectId });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Project");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Project");
+                TempData["ErrorMessage"] = ex;
+                return RedirectToAction("Error", "Home");
             }
-
-
         }
 
 
@@ -252,8 +279,10 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Detail", "Project", new { id = projectMember.ProjectId });
             }
-            catch
+
+            catch (Exception ex)
             {
+                TempData["ErrorMessage"] = ex;
                 return RedirectToAction("Error", "Home");
             }
 
@@ -273,13 +302,11 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Detail", "Project", new { id = duty.ProjectId });
             }
-            catch
+            catch (Exception ex)
             {
+                TempData["ErrorMessage"] = ex;
                 return RedirectToAction("Error", "Home");
             }
-
-
-
         }
 
     }

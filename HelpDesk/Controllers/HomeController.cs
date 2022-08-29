@@ -61,6 +61,7 @@ namespace HelpDesk.Controllers
             }
             catch (Exception ex)
             {
+                TempData["ErrorMessage"] = ex;
                 return RedirectToAction("Error", "Home");
             }
 

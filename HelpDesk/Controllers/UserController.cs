@@ -76,11 +76,11 @@ namespace HelpDesk.Controllers
 
                 return RedirectToAction("Profile", "User");
             }
-            catch
+            catch (Exception ex)
             {
+                TempData["ErrorMessage"] = ex;
                 return RedirectToAction("Error", "Home");
             }
-
 
         }
     }
