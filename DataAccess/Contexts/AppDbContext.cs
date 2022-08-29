@@ -32,7 +32,7 @@ namespace DataAccess.Contexts
 
             #region User
             modelBuilder.Entity<User>().HasData(
-                new { Id = 1, Name = "Sevda", LastName = "Ghiyasi", UserName = "Sevda@gmail.com", Password = "123", Type = UserType.Admin });
+                new { Id = 1, Name = "Sevda", LastName = "Ghiyasi", Email = "Sevda@gmail.com", Password = "123", Type = UserType.Admin });
 
             #endregion
 

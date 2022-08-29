@@ -44,7 +44,7 @@ namespace HelpDesk.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var existUser = await _userRepository.GetAll().Where(u => u.UserName == _user.UserName).ToListAsync();
+                    var existUser = await _userRepository.GetAll().Where(u => u.Email == _user.Email).ToListAsync();
                     if (existUser.Any())
                     {
                         TempData["ErrorMessage"] = "UserName must be uniqe !";
@@ -55,7 +55,7 @@ namespace HelpDesk.Controllers
                     {
                         var newUser = new User
                         {
-                            UserName = _user.UserName,
+                            Email = _user.Email,
                             Name = _user.Name,
                             LastName = _user.LastName,
                             Password = _user.Password,
@@ -99,7 +99,7 @@ namespace HelpDesk.Controllers
                         Id = user.Id,
                         Name = user.Name,
                         LastName = user.LastName,
-                        UserName = user.UserName,
+                        UserName = user.Email,
                         Type = user.Type
                     };
                     return View(editUserDto);
@@ -129,7 +129,7 @@ namespace HelpDesk.Controllers
                 {
                     user.Name = _user.Name;
                     user.LastName = _user.LastName;
-                    user.UserName = _user.UserName;
+                    user.Email = _user.UserName;
                     user.Type = _user.Type;
 
                     await _userRepository.UpdateAsync(user, user.Id);

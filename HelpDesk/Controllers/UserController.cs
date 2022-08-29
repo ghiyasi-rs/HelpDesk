@@ -31,7 +31,7 @@ namespace HelpDesk.Controllers
                     Id = user.Id,
                     Name = user.Name,
                     LastName = user.LastName,
-                    UserName = user.UserName,
+                    UserName = user.Email,
                     Type = user.Type,
                 };
                 return View(profileDto);

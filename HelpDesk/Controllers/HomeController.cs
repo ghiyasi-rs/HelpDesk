@@ -40,13 +40,13 @@ namespace HelpDesk.Controllers
 
         public async Task<IActionResult> Login(User _user)
         {
-            var user = await _userRepository.FindAsync(u => u.UserName == _user.UserName && u.Password == _user.Password);
+            var user = await _userRepository.FindAsync(u => u.Email == _user.Email && u.Password == _user.Password);
 
             try
             {
                 if (user != null)
                 {
-                    HttpContext.Session.SetString("UserName", user.UserName);
+                    HttpContext.Session.SetString("UserName", user.Email);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
                     HttpContext.Session.SetString("UserType", user.Type.ToString());
                     

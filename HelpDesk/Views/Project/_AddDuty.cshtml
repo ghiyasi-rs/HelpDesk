@@ -1,12 +1,11 @@
 ﻿@model Domain.Dtos.DutyDto
 
 
-
 <div class="modal fade" id="myModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
-            <div class="modal-header headerStyle">
+            <div class="modal-header ">
                 <h5>Add Duty To Project</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -21,30 +20,30 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.ProjectId)
 
-                    <div class="form-horizontal">
+                    <div class="form-horizontal  p-1">
 
-                        <div class="row">
+                        <div class="row  p-1">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 <span class="alert-danger">@TempData["ErrorMessage"]</span>
                             </div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group  p-1">
                             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-4">
                                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group  p-1">
                             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-4">
                                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group  p-1">
                             @Html.LabelFor(model => model.Users, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-4">
                                 @Html.DropDownListFor(x => Model.UserId, new SelectList(Model.Users, "Id", "Name"), htmlAttributes: new { @class = "form-control", id = "UserId"})
@@ -54,12 +53,12 @@
                     </div>
                 }
             </div>
-            <div style="position:sticky; bottom:0 ; background:#fff">
+            <div>
 
                 <div class="modal-footer d-flex justify-content-center align-items-center">
 
-                    <button type="button" class="btn  submitBtn" data-save="modal">Add</button>
-                    <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-outline-primary" data-save="modal">Add</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
 
                 </div>
             </div>

@@ -17,8 +17,10 @@ namespace Domain.Entities
         [Required]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "UserName is required")]
-        public string UserName { get; set; }
+       
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]       
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
